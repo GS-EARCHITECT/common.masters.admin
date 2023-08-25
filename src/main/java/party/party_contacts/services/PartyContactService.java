@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import party.party_contacts.model.dto.PartyContactDTO;
 import party.party_contacts.model.master.PartyContact;
 import party.party_contacts.model.master.PartyContactPK;
 import party.party_contacts.model.repo.PartyContactRepo;
 
 @Service("partyContactServ")
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 public class PartyContactService implements I_PartyContactService 
 {

@@ -1,8 +1,7 @@
 package service.service_class.service;
 
 import java.util.ArrayList;
-
-import service_class.model.dto.ServiceClassMaster_DTO;
+import service.service_class.model.dto.ServiceClassMaster_DTO;
 
 public interface I_ServiceClassMaster_Service
 {

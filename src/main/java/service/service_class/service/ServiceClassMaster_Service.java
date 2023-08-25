@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import service.service_class.model.dto.ServiceClassMaster_DTO;
+import service.service_class.model.master.ServiceClassMaster;
+import service.service_class.model.repo.ServiceClassMaster_Repo;
 
 @Service("serviceClassMasterServ")
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service 
 {
@@ -17,30 +23,30 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
 	@Autowired
 	private ServiceClassMaster_Repo serviceClassMasterRepo;
 
-	public ServiceClassMaster_DTO newServiceClass(ServiceClassMasterDTO lMaster) 
+	public ServiceClassMaster_DTO newServiceClass(ServiceClassMaster_DTO lMaster) 
 	{
 		ServiceClassMaster ServiceClassMaster = serviceClassMasterRepo.save(this.setServiceClassMaster(lMaster));
-		lMaster = getServiceClassMasterDTO(ServiceClassMaster);
+		lMaster = getServiceClassMaster_DTO(ServiceClassMaster);
 		return lMaster;
 	}
 
-	public ArrayList<ServiceClassMasterDTO> getAllServiceClasses()
+	public ArrayList<ServiceClassMaster_DTO> getAllServiceClasses()
 	{
 		ArrayList<ServiceClassMaster> serviceList = (ArrayList<ServiceClassMaster>) serviceClassMasterRepo.findAll();
-		ArrayList<ServiceClassMasterDTO> lMasters = new ArrayList<ServiceClassMasterDTO>();
-		lMasters = serviceList != null ? this.getServiceClassMasterDTOs(serviceList) : null;
+		ArrayList<ServiceClassMaster_DTO> lMasters = new ArrayList<ServiceClassMaster_DTO>();
+		lMasters = serviceList != null ? this.getServiceClassMaster_DTOs(serviceList) : null;
 		return lMasters;
 	}
 
-	public ArrayList<ServiceClassMasterDTO> getSelectServiceClasses(ArrayList<Long> ids)
+	public ArrayList<ServiceClassMaster_DTO> getSelectServiceClasses(ArrayList<Long> ids)
 	{
-		ArrayList<ServiceClassMaster> lMasters = serviceClassMasterRepo.getSelectServiceClasses(ids);
-		ArrayList<ServiceClassMasterDTO> serviceClassMasterDTOs = new ArrayList<ServiceClassMasterDTO>();
-		serviceClassMasterDTOs = lMasters != null ? this.getServiceClassMasterDTOs(lMasters) : null;
-		return serviceClassMasterDTOs;
+		ArrayList<ServiceClassMaster> lMasters = (ArrayList<ServiceClassMaster>) serviceClassMasterRepo.findAllById(ids);
+		ArrayList<ServiceClassMaster_DTO> ServiceClassMaster_DTOs = new ArrayList<ServiceClassMaster_DTO>();
+		ServiceClassMaster_DTOs = lMasters != null ? this.getServiceClassMaster_DTOs(lMasters) : null;
+		return ServiceClassMaster_DTOs;
 	}
    
-	public void updServiceClass(ServiceClassMasterDTO lMaster) 
+	public void updServiceClass(ServiceClassMaster_DTO lMaster) 
 	{
 		ServiceClassMaster serviceClassMaster = null;
 		if (serviceClassMasterRepo.existsById(lMaster.getServiceClassSeqNo())) 
@@ -61,24 +67,24 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
 	{
 		if (serviceClassSeqNos != null) 
 		{
-			serviceClassMasterRepo.delSelectServiceClasses(serviceClassSeqNos);
+			serviceClassMasterRepo.deleteAllById(serviceClassSeqNos);
 		}
 	}
 
 	
-	private ArrayList<ServiceClassMasterDTO> getServiceClassMasterDTOs(ArrayList<ServiceClassMaster> lMasters) {
-		ServiceClassMasterDTO lDTO = null;
-		ArrayList<ServiceClassMasterDTO> lMasterDTOs = new ArrayList<ServiceClassMasterDTO>();		
+	private ArrayList<ServiceClassMaster_DTO> getServiceClassMaster_DTOs(ArrayList<ServiceClassMaster> lMasters) {
+		ServiceClassMaster_DTO lDTO = null;
+		ArrayList<ServiceClassMaster_DTO> lMasterDTOs = new ArrayList<ServiceClassMaster_DTO>();		
 		for (int i = 0; i < lMasters.size(); i++) {
-			lDTO = getServiceClassMasterDTO(lMasters.get(i));			
+			lDTO = getServiceClassMaster_DTO(lMasters.get(i));			
 			lMasterDTOs.add(lDTO);
 		}
 		return lMasterDTOs;
 	}
 
-	private ServiceClassMasterDTO getServiceClassMasterDTO(ServiceClassMaster lMaster) 
+	private ServiceClassMaster_DTO getServiceClassMaster_DTO(ServiceClassMaster lMaster) 
 	{		
-		ServiceClassMasterDTO lDTO = new ServiceClassMasterDTO();
+		ServiceClassMaster_DTO lDTO = new ServiceClassMaster_DTO();
 		lDTO.setRemark(lMaster.getRemark());		
 		lDTO.setServiceClassSeqNo(lMaster.getServiceClassSeqNo());
 		lDTO.setServiceClass(lMaster.getServiceClass());
@@ -88,7 +94,7 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
 		return lDTO;
 	}
 
-	private ServiceClassMaster setServiceClassMaster(ServiceClassMasterDTO lDTO) {
+	private ServiceClassMaster setServiceClassMaster(ServiceClassMaster_DTO lDTO) {
 		ServiceClassMaster lMaster = new ServiceClassMaster();				
 		lMaster.setRemark(lDTO.getRemark());
 		lMaster.setSpecificationSeqNo(lDTO.getSpecificationSeqNo());				
