@@ -3,3 +3,17 @@
 /billing_scheduler_mgmt/
 /billing_work_details_mgmt/
 /main/
+/party/
+/place/
+/place_master_mgmt/
+/place_class_mgmt/
+/resource/
+/resource_class_mgmt/
+/resource_master_mgmt/
+/service/
+/service_class_mgmt/
+/service_class/
+/service_mgmt/
+/job/
+/job_class_master_mgmt/
+/job_master_mgmt/
