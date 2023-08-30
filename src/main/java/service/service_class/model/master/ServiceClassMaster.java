@@ -12,17 +12,15 @@ import javax.persistence.*;
 public class ServiceClassMaster implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_CLASS_SEQUENCE")
 	@SequenceGenerator(name = "SERVICE_CLASS_SEQUENCE", sequenceName = "SERVICE_CLASS_SEQUENCE", allocationSize = 1)
 	@Column(name = "SERVICE_CLASS_SEQ_NO")
-	private Long serviceClassSeqNo;
+	private long serviceClassSeqNo;
 
 	@Column(name = "DESCRIPTION")
 	private String description;
-
-	@Column(name = "REMARK")
-	private String remark;
 
 	@Column(name = "SERVICE_CLASS")
 	private String serviceClass;
@@ -36,11 +34,11 @@ public class ServiceClassMaster implements Serializable
 	public ServiceClassMaster() {
 	}
 
-	public Long getServiceClassSeqNo() {
+	public long getServiceClassSeqNo() {
 		return this.serviceClassSeqNo;
 	}
 
-	public void setServiceClassSeqNo(Long serviceClassSeqNo) {
+	public void setServiceClassSeqNo(long serviceClassSeqNo) {
 		this.serviceClassSeqNo = serviceClassSeqNo;
 	}
 
@@ -50,14 +48,6 @@ public class ServiceClassMaster implements Serializable
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getRemark() {
-		return this.remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
 	}
 
 	public String getServiceClass() {
@@ -88,12 +78,7 @@ public class ServiceClassMaster implements Serializable
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((remark == null) ? 0 : remark.hashCode());
-		result = prime * result + ((serviceClass == null) ? 0 : serviceClass.hashCode());
 		result = prime * result + (int) (serviceClassSeqNo ^ (serviceClassSeqNo >>> 32));
-		result = prime * result + ((specificationSeqNo == null) ? 0 : specificationSeqNo.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
 
@@ -106,42 +91,16 @@ public class ServiceClassMaster implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		ServiceClassMaster other = (ServiceClassMaster) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (remark == null) {
-			if (other.remark != null)
-				return false;
-		} else if (!remark.equals(other.remark))
-			return false;
-		if (serviceClass == null) {
-			if (other.serviceClass != null)
-				return false;
-		} else if (!serviceClass.equals(other.serviceClass))
-			return false;
 		if (serviceClassSeqNo != other.serviceClassSeqNo)
-			return false;
-		if (specificationSeqNo == null) {
-			if (other.specificationSeqNo != null)
-				return false;
-		} else if (!specificationSeqNo.equals(other.specificationSeqNo))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
 			return false;
 		return true;
 	}
 
-	public ServiceClassMaster(Long serviceClassSeqNo, String description, String remark, String serviceClass,
+	public ServiceClassMaster(long serviceClassSeqNo, String description, String serviceClass,
 			java.lang.Long specificationSeqNo, String status) {
 		super();
 		this.serviceClassSeqNo = serviceClassSeqNo;
 		this.description = description;
-		this.remark = remark;
 		this.serviceClass = serviceClass;
 		this.specificationSeqNo = specificationSeqNo;
 		this.status = status;

@@ -48,12 +48,12 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
    
 	public void updServiceClass(ServiceClassMaster_DTO lMaster) 
 	{
-		ServiceClassMaster serviceClassMaster = null;
+		ServiceClassMaster ServiceClassMaster = null;
 		if (serviceClassMasterRepo.existsById(lMaster.getServiceClassSeqNo())) 
 		{		
-			serviceClassMaster = this.setServiceClassMaster(lMaster);
-			serviceClassMaster.setServiceClassSeqNo(lMaster.getServiceClassSeqNo());			
-			serviceClassMasterRepo.save(serviceClassMaster);			
+			ServiceClassMaster = this.setServiceClassMaster(lMaster);
+			ServiceClassMaster.setServiceClassSeqNo(lMaster.getServiceClassSeqNo());			
+			serviceClassMasterRepo.save(ServiceClassMaster);			
 		}
 		return;
 	}
@@ -85,7 +85,6 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
 	private ServiceClassMaster_DTO getServiceClassMaster_DTO(ServiceClassMaster lMaster) 
 	{		
 		ServiceClassMaster_DTO lDTO = new ServiceClassMaster_DTO();
-		lDTO.setRemark(lMaster.getRemark());		
 		lDTO.setServiceClassSeqNo(lMaster.getServiceClassSeqNo());
 		lDTO.setServiceClass(lMaster.getServiceClass());
 		lDTO.setSpecificationSeqNo(lMaster.getSpecificationSeqNo());				
@@ -96,7 +95,6 @@ public class ServiceClassMaster_Service implements I_ServiceClassMaster_Service
 
 	private ServiceClassMaster setServiceClassMaster(ServiceClassMaster_DTO lDTO) {
 		ServiceClassMaster lMaster = new ServiceClassMaster();				
-		lMaster.setRemark(lDTO.getRemark());
 		lMaster.setSpecificationSeqNo(lDTO.getSpecificationSeqNo());				
 		lMaster.setDescription(lDTO.getDescription());
 		lMaster.setStatus(lDTO.getStatus());
