@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import job.job_master.model.dto.JobMaster_DTO;
-import job.job_master.services.I_JobMaster_Service;
+import job.job_master.services.I_JobMasterAdmin_Service;
 
 @RestController
-@RequestMapping("/jobMasterMgmt")
-public class JobMaster_Controller 
+@RequestMapping("/jobMasterAdminMgmt")
+public class JobMasterAdmin_Controller 
 {
 	@Autowired
-	private I_JobMaster_Service jobMasterService;
+	private I_JobMasterAdmin_Service jobMasterAdminService;
 
 	@PostMapping("/new")
 	public ResponseEntity<JobMaster_DTO> newJob(@RequestBody JobMaster_DTO jcmDTO) {
-		JobMaster_DTO JobMaster_DTO2 = jobMasterService.newJobMaster(jcmDTO);
+		JobMaster_DTO JobMaster_DTO2 = jobMasterAdminService.newJobMaster(jcmDTO);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<>(JobMaster_DTO2, httpHeaders, HttpStatus.CREATED);
 	}
@@ -34,7 +33,7 @@ public class JobMaster_Controller
 	@GetMapping(value = "/getSelectJobMasters", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ArrayList<JobMaster_DTO>> getSelectJobMasters(
 			@RequestBody ArrayList<Long> jobMasterSeqNos) {
-		ArrayList<JobMaster_DTO> JobMaster_DTOs = jobMasterService
+		ArrayList<JobMaster_DTO> JobMaster_DTOs = jobMasterAdminService
 				.getSelectJobMasters(jobMasterSeqNos);
 		return new ResponseEntity<>(JobMaster_DTOs, HttpStatus.OK);
 	}
@@ -42,23 +41,23 @@ public class JobMaster_Controller
 	@GetMapping(value = "/getAllJobMasters", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ArrayList<JobMaster_DTO>> getAllJobMasters() 
 	{
-		ArrayList<JobMaster_DTO> JobMaster_DTOs = jobMasterService.getAllJobMasters();
+		ArrayList<JobMaster_DTO> JobMaster_DTOs = jobMasterAdminService.getAllJobMasters();
 		return new ResponseEntity<>(JobMaster_DTOs, HttpStatus.OK);
 	}
 
 	@PutMapping("/jobMaster")
 	public void updateJobMaster(@RequestBody JobMaster_DTO jcmDTO) {
-		jobMasterService.updJobMaster(jcmDTO);
+		jobMasterAdminService.updJobMaster(jcmDTO);
 	}
 
 	@DeleteMapping("/delAllJobMasters")
 	public void deleteAllJobMasters() {
-		jobMasterService.delAllJobMasters();
+		jobMasterAdminService.delAllJobMasters();
 	}
 
 	@DeleteMapping("/delSelectJobMasters")
 	public void deleteSelectJobMasters(@RequestBody ArrayList<Long> jobMasterSeqNoList) 
 	{
-		jobMasterService.delSelectJobMasters(jobMasterSeqNoList);
+		jobMasterAdminService.delSelectJobMasters(jobMasterSeqNoList);
 	}
 }
